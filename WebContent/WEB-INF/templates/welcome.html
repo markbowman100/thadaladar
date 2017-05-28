@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Mark Web</title>
+	    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.css" th:href="@{/resources/css/bootstrap.css}">
+	    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-theme.css" th:href="@{/resources/css/bootstrap-theme.css}">
+	    <link rel="stylesheet" type="text/css" href="/resources/css/markweb.css" th:href="@{/resources/css/markweb.css}">
+		<script src="/resources/js/jQuery.js" th:src="@{/resources/js/jQuery.js}"></script> 
+		<script src="/resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+	</head>
+	<body>
+		<div class="header" th:include="header :: header">
+		
+		</div>
+		<div th:fragment="content">
+			Welcome to Mark Web!
+		</div>
+		
+		<div class="footer" th:include="footer:: footer">
+		
+		</div>
+	</body>
+</html>

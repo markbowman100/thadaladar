@@ -1,0 +1,93 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	background-color: #222222;
+	color: white;
+}
+
+h1, h2, h3, h4, h5 {
+	color:white;
+}
+
+.content {
+	vertical-align:middle;
+}
+
+.reset_button, .submit_button {
+	margin-left:5%;
+	margin-right:5%;
+	width:40%;
+}
+
+.login_field {
+	width:100%;
+}
+
+.login_field_text {
+	text-align:center;
+}
+
+.register, .login {
+	margin-top:10vh;
+}
+
+.btn-black {
+	background-color:#222222;
+	color:white;
+}
+
+.btn-crimson {
+	background-color:crimson;
+	color:white;
+}
+
+.navbar {
+	background-color: crimson; /* fallback color, place your own */
+	color:white;
+	border-color:black;
+
+	/* Gradients for modern browsers, replace as you see fit */
+	background-image: -moz-linear-gradient(top, crimson, #222222);
+	background-image: -ms-linear-gradient(top, crimson, #222222);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(crimson), to(#222222));
+	background-image: -webkit-linear-gradient(top, crimson, #222222);
+	background-image: -o-linear-gradient(top, crimson, #222222);
+	background-image: linear-gradient(top, crimson, #222222);
+	background-repeat: repeat-x;
+
+  /* IE8-9 gradient filter */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
+}
+
+.navbar-fixed-bottom {
+	background-color: crimson; /* fallback color, place your own */
+	color:white;
+	border-color:black;
+
+	/* Gradients for modern browsers, replace as you see fit */
+	background-image: -moz-linear-gradient(bottom, crimson, #222222);
+	background-image: -ms-linear-gradient(bottom, crimson, #222222);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222222), to(crimson));
+	background-image: -webkit-linear-gradient(bottom, crimson, #222222);
+	background-image: -o-linear-gradient(bottom, crimson, #222222);
+	background-image: linear-gradient(bottom, crimson, #222222);
+	background-repeat: repeat-x;
+
+  /* IE8-9 gradient filter */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
+}
+
+.navbar-big-brand {
+	color:white;
+	font-size:24px;
+}
+
+.navbar-small-brand {
+	color:white;
+	font-size:14px;
+}
+
+.form-control:focus {
+    border-color: #FF0000;
+    box-shadow: inset 0 1px 1px crimson, 0 0 8px crimson;
+}

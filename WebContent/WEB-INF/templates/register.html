@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Mark Web</title>
+	    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.css" th:href="@{/resources/css/bootstrap.css}">
+	    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-theme.css" th:href="@{/resources/css/bootstrap-theme.css}">
+	    <link rel="stylesheet" type="text/css" href="/resources/css/markweb.css" th:href="@{/resources/css/markweb.css}">
+		<script src="/resources/js/jQuery.js" th:src="@{/resources/js/jQuery.js}"></script> 
+		<script src="/resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+	</head>
+	<body>
+		<div class="header" th:include="header :: header">
+		
+		</div>
+			
+		<div class="row register">
+			<div class="col-sm-5">
+			
+			</div>
+			<div class="col-sm-2">
+				<form action="#" th:action="@{/register}" th:object="${register}" method="post">
+					
+					<h3 class = "text-center">Register</h3>
+					<input class="login_field form-control" th:field="*{username}" type="text" placeholder="Username"></input>
+					<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</div>
+					<br>
+					<input class="login_field form-control" th:field="*{password}" id="password" type="password" placeholder="Password"></input>
+					<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</div>
+					<br>
+					<input class="login_field form-control" th:field="*{confirmPassword}" id="confirmPassword" type="password" placeholder="Confirm Password"></input>
+					<div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Name Error</div>
+					<div th:if="${!register.isValid()}">Passwords must match</div>
+					<br>
+					<input class="login_field form-control" th:field="*{email}" id="email" type="email" placeholder="Email"></input>
+					<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</div>
+					<br>
+					<input class="login_field form-control" th:field="*{confirmEmail}" id="confirmEmail" type="email" placeholder="Confirm Email"></input>
+					<div th:if="${#fields.hasErrors('confirmEmail')}" th:errors="*{confirmEmail}">Name Error</div>
+					<br>
+					<input class="btn submit_button btn-crimson" type="submit" value="Submit"><input class="btn reset_button btn-crimson" type="reset" value="Reset">
+					
+				</form>
+			</div>
+			<div class="col-sm-5">
+			
+			</div>
+		</div>
+		
+		<div class="footer" th:include="footer:: footer">
+		
+		</div>
+	</body>
+</html>
