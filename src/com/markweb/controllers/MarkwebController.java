@@ -25,6 +25,7 @@ import com.markweb.objects.User;
 
 @EnableWebMvc
 @Controller
+@RequestMapping("/")
 public class MarkwebController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
