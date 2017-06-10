@@ -9,7 +9,11 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>MarkwebController</servlet-name>
+    <servlet-name>LoginController</servlet-name>
     <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdventureController</servlet-name>
+    <url-pattern>/Adventure</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -1,32 +1,31 @@
 package com.markweb.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.websocket.Session;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.markweb.logic.LoginLogic;
+import com.markweb.logic.LoginLogicImpl;
 import com.markweb.objects.Register;
 import com.markweb.objects.User;
 
 @EnableWebMvc
 @Controller
 @RequestMapping("/")
-public class MarkwebController {
+public class LoginController {
+	
+	private LoginLogic logic = new LoginLogicImpl();
+	private static Logger log = Logger.getLogger("com.markweb.controller");
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
     public String helloGet(User user, BindingResult bindingresult, HttpSession session) {
@@ -45,13 +44,11 @@ public class MarkwebController {
 		
 		String pageName = "login";
 		
-		try {
-			if (user.getUsername().equals("Jamzo") && user.getPassword().equals("aaaaaaa1")) {
-				session.setAttribute("username", user.getUsername());
-				pageName = "redirect:/welcome";
-			}
-		} catch(Exception e) {
-			
+		boolean success = logic.attemptLoginCredentials(user.getUsername(), user.getPassword());
+		
+		if (success) {
+			session.setAttribute("username", user.getUsername());
+			pageName = "redirect:/welcome";
 		}
 		
 		return pageName;
@@ -62,13 +59,8 @@ public class MarkwebController {
 		
 		String pageName = "register";
 		
-		try {
-			if (user.getUsername().equals("Jamzo") && user.getPassword().equals("aaaaaaa1")) {
-				session.setAttribute("username", user.getUsername());
-				pageName = "redirect:/welcome";
-			}
-		} catch(Exception e) {
-			
+		if (session.getAttribute("username") != null) {
+			pageName = "redirect:/welcome";
 		}
 		
 		return pageName;
@@ -80,7 +72,17 @@ public class MarkwebController {
 		String pageName = "register";
 		
 		if (!bindingresult.hasErrors()) {
-			pageName = "redirect:/";
+			List<Map<String, Object>> resultSet = logic.checkIfUserExists(user.getUsername());
+			
+			if (!resultSet.isEmpty()) {
+				bindingresult.addError(new ObjectError("username", "Username already exists, try a different one"));
+			}
+			else {
+				boolean success = logic.insertNewUser(user.getUsername(), user.getPassword(), user.getEmail());
+				if (success) {
+					pageName = "redirect:/";
+				}
+			}
 		}
 		
 		return pageName;
