@@ -21,7 +21,6 @@ import com.markweb.objects.User;
 
 @EnableWebMvc
 @Controller
-@RequestMapping("/")
 public class LoginController {
 	
 	private LoginLogic logic = new LoginLogicImpl();
@@ -91,12 +90,12 @@ public class LoginController {
 	@RequestMapping(value = "/welcome")
     public String welcome(HttpSession session) {
 		
-		String pageName = "redirect:/";
+		String pageName = "welcome";
 		
 		System.out.println(session.getAttribute("username"));
 		
-		if (session.getAttribute("username") != null) {
-			pageName = "welcome";
+		if (session.getAttribute("username") == null) {
+			pageName = "redirect:/";
 		}
 		
         return pageName;

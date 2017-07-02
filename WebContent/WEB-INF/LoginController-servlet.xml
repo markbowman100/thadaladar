@@ -10,7 +10,7 @@
 	        http://www.springframework.org/schema/context 
 	        http://www.springframework.org/schema/context/spring-context.xsd">
 	
-	<context:component-scan base-package="com.markweb.controllers"></context:component-scan>
+	<context:component-scan base-package="com.markweb"></context:component-scan>
 	
     <!-- **************************************************************** -->
     <!--  THYMELEAF-SPECIFIC ARTIFACTS                                    -->
