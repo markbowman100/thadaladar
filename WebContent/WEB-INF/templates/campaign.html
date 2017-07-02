@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Thadalodar</title>
+	    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.css" th:href="@{/resources/css/bootstrap.css}">
+	    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-theme.css" th:href="@{/resources/css/bootstrap-theme.css}">
+	    <link rel="stylesheet" type="text/css" href="/resources/css/markweb.css" th:href="@{/resources/css/markweb.css}">
+		<script src="/resources/js/jQuery.js" th:src="@{/resources/js/jQuery.js}"></script> 
+		<script src="/resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+	</head>
+	<body>
+		<div class="header" th:include="header :: header">
+		
+		</div>
+		<div class="row main_body">
+			<div class="col-sm-1 side-panel">
+			
+			</div>
+			<div class="col-sm-10">
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<div class="row">
+					<div class="col-sm-2">
+						<h2>Current Campaigns</h2>
+					</div>
+					<div class="col-sm-6">
+						
+					</div>
+					<div class="col-sm-2">
+						
+					</div>
+					<div class="col-sm-2">
+						<a class="btn btn-default" style="margin-right:5px;" th:if="${session.username != null}" href="#" th:href="@{/}">Start Campaign</a>
+						<a class="btn btn-default" th:if="${session.username != null}" href="#" th:href="@{/}">Join Campaign</a>
+					</div>
+				</div>
+				<div class="row row_spacer">
+				
+				</div>
+				<div th:if="${campaigns.isEmpty()}" class="row campaign">
+					<div style="padding-top:100px;padding-bottom:100px;fon-size:60px;" class = "text-center">You have not joined any campaigns yet.</div>
+				</div>
+				<div th:each="campaign : ${campaigns}" class="row campaign">
+					<div class="row mid_row_spacer">
+				
+					</div>
+					<div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-4">
+								<h5 style = "color:black;" class = "text-center">Title: </h5><h5 style = "color:black;" th:text="${campaign.title}">Title</h5>
+							</div>
+							<div class="col-sm-4">
+								<h5 style = "color:black;" class = "text-center">Players:</h5>
+							</div>
+							<div class="col-sm-2">
+								<h5 style = "color:black;" class = "text-center">Game: </h5><h5 style = "color:black;" th:text="${campaign.game}">Game</h5>
+							</div>
+							<div class="col-sm-2">
+								<h5 style = "color:black;" class = "text-center">Version: </h5><h5 style = "color:black;" th:text="${campaign.version}">Version</h5>
+							</div>
+						</div>
+						<div class="row mid_row_spacer campaign_header">
+						
+						</div>
+						<div class="row mid_row_spacer">
+						
+						</div>
+						<div class="row">
+							<div class="col-sm-12" th:text="${campaign.description}">Description</div>
+						</div>
+						<div class="row mid_row_spacer campaign_header">
+						
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<h5 style = "color:black;">Stuff to Do:</h5>
+							</div>
+						</div>
+						<div class="row row_spacer">
+						
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<a class="btn btn-default" th:if="${session.username != null}" href="#" th:href="@{/}">Adventure #1</a>
+								<a class="btn btn-default" th:if="${session.username != null}" href="#" th:href="@{/}">Adventure #2</a>
+							</div>
+						</div>
+						<div class="row mid_row_spacer">
+						
+						</div>
+					</div>
+					<div class="row row_spacer">
+				
+					</div>
+				</div>
+				<div class="row row_spacer">
+				
+				</div>
+			</div>
+		</div>
+		
+		<div class="footer" th:include="footer:: footer">
+		
+		</div>
+	</body>
+</html>
