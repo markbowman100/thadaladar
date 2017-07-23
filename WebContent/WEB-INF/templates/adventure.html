@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Thadalodar</title>
+	    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.css" th:href="@{/resources/css/bootstrap.css}">
+	    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-theme.css" th:href="@{/resources/css/bootstrap-theme.css}">
+	    <link rel="stylesheet" type="text/css" href="/resources/css/markweb.css" th:href="@{/resources/css/markweb.css}">
+		<script src="/resources/js/jQuery.js" th:src="@{/resources/js/jQuery.js}"></script> 
+		<script src="/resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+	</head>
+	<body>
+		<div class="header" th:include="header :: header">
+		
+		</div>
+			
+		<div class="row main_body">
+			<div class="col-sm-1 side-panel">
+				
+			</div>
+			<div class="col-sm-10">
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<div class="row">
+					<div class="col-sm-2">
+						<h2 th:text="${session.adventure.title}">Title</h2>
+					</div>
+					<div class="col-sm-6">
+						
+					</div>
+					<div class="col-sm-2">
+						
+					</div>
+					<div class="col-sm-2">
+						<a class="btn btn-default" style="margin-right:5px;" th:if="${session.username != null}" href="#" th:href="@{/}">Start Campaign</a>
+						<a class="btn btn-default" th:if="${session.username != null}" href="#" th:href="@{/}">Join Campaign</a>
+					</div>
+				</div>
+				<div class="row row_spacer">
+				
+				</div>
+				<div class="row">
+					<div th:text="${session.adventure.scene.title}"></div>
+					<div th:text="${session.adventure.scene.story}"></div>
+					<form th:action="@{/adventure(a=${adventure.adventureId},b=${adventure.playerAdventureId})}" th:object="${command}" method="post">
+						<ul>
+						  	<li th:each="opt : ${adventure.scene.options}">
+						    	<input type="radio" th:field="*{selectedOption}" th:value="${opt.title}" />
+						    	<label th:for="${#ids.prev('selectedOption')}" th:text="${opt.title}">Option</label>
+						 	 </li>
+						</ul>
+						<button th:if="${adventure.scene.options} != null" type="submit">Embark!</button>
+					</form>
+				</div>
+			</div>
+			<div class="col-sm-1 side-panel">
+			
+			</div>
+		</div>
+		
+		<div class="footer" th:include="footer:: footer">
+		
+		</div>
+	</body>
+</html>

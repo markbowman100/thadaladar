@@ -5,6 +5,7 @@ import java.time.*;
 
 public class Campaign {
 	
+	int playerId;
 	int id;
 	String title;
 	String description;
@@ -17,6 +18,13 @@ public class Campaign {
 	LocalDate endDate;
 	List<Adventure> adventures;
 	
+	
+	public int getPlayerId() {
+		return playerId;
+	}
+	public void setPlayerId(int playerId) {
+		this.playerId = playerId;
+	}
 	public String getTitle() {
 		return title;
 	}

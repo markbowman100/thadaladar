@@ -5,23 +5,54 @@ import java.util.List;
 
 public class Adventure {
 	
+	int adventureId;
+	int playerAdventureId;
+	int playerId;
 	String title;
-	List<AdventureScene> scenes;
+	String description;
+	AdventureScene scene;
 	LocalDate startDate;
 	LocalDate endDate;
 	LocalDate dueDate;
 	
+	public int getAdventureId() {
+		return adventureId;
+	}
+	public void setAdventureId(int adventureId) {
+		this.adventureId = adventureId;
+	}
+	public int getPlayerAdventureId() {
+		return playerAdventureId;
+	}
+	public void setPlayerAdventureId(int playerAdventureId) {
+		this.playerAdventureId = playerAdventureId;
+	}
+	public int getPlayerId() {
+		return playerId;
+	}
+	public void setPlayerId(int playerId) {
+		this.playerId = playerId;
+	}
+	public void setScene(AdventureScene scene) {
+		this.scene = scene;
+	}
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public List<AdventureScene> getScenes() {
-		return scenes;
+	public String getDescription() {
+		return description;
 	}
-	public void setScenes(List<AdventureScene> scenes) {
-		this.scenes = scenes;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public AdventureScene getScene() {
+		return scene;
+	}
+	public void setScenes(AdventureScene scene) {
+		this.scene = scene;
 	}
 	public LocalDate getStartDate() {
 		return startDate;

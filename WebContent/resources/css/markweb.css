@@ -120,3 +120,7 @@ h1, h2, h3, h4, h5 {
 .campaign_header {
 	border-bottom: solid 2px #222222;
 }
+
+.d-inline {
+	display:inline;
+}

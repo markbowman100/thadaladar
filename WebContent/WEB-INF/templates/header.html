@@ -11,7 +11,7 @@
 						<a class="navbar-brand navbar-big-brand" href="#">Thadalodar</a>
 						<a class="navbar-brand navbar-small-brand" th:if="${session.username == null}" href="#" th:href="@{/}">Login</a>
 					    <a class="navbar-brand navbar-small-brand" th:if="${session.username != null}" href="#" th:href="@{/welcome}">Welcome</a>
-					    <a class="navbar-brand navbar-small-brand" th:if="${session.username != null}" href="#" th:href="@{/adventure}">Campaigns</a>
+					    <a class="navbar-brand navbar-small-brand" th:if="${session.username != null}" href="#" th:href="@{/campaign}">Campaigns</a>
 					    <a class="navbar-brand navbar-small-brand" th:if="${session.username == null}" href="#" th:href="@{/register}">Register</a>
 					    <a class="navbar-brand navbar-small-brand" th:if="${session.username != null}" href="#" th:href="@{/logout}">Logout</a>
 					</div>

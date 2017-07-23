@@ -50,16 +50,16 @@
 					<div class="col-sm-12">
 						<div class="row">
 							<div class="col-sm-4">
-								<h5 style = "color:black;" class = "text-center">Title: </h5><h5 style = "color:black;" th:text="${campaign.title}">Title</h5>
+								<h5 style = "color:black;" class = "d-inline">Title: </h5><h5 class="d-inline" style = "color:black;" th:text="${campaign.title}">Title</h5>
 							</div>
 							<div class="col-sm-4">
-								<h5 style = "color:black;" class = "text-center">Players:</h5>
+								<h5 style = "color:black;" class = "d-inline">Players:</h5><h5 class="d-inline" style = "color:black;">Placeholder for Players</h5>
 							</div>
 							<div class="col-sm-2">
-								<h5 style = "color:black;" class = "text-center">Game: </h5><h5 style = "color:black;" th:text="${campaign.game}">Game</h5>
+								<h5 style = "color:black;" class = "d-inline">Game: </h5><h5 class="d-inline" style = "color:black;" th:text="${campaign.game}">Game</h5>
 							</div>
 							<div class="col-sm-2">
-								<h5 style = "color:black;" class = "text-center">Version: </h5><h5 style = "color:black;" th:text="${campaign.version}">Version</h5>
+								<h5 style = "color:black;" class = "d-inline">Version: </h5><h5 class="d-inline" style = "color:black;" th:text="${campaign.version}">Version</h5>
 							</div>
 						</div>
 						<div class="row mid_row_spacer campaign_header">
@@ -84,8 +84,7 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<a class="btn btn-default" th:if="${session.username != null}" href="#" th:href="@{/}">Adventure #1</a>
-								<a class="btn btn-default" th:if="${session.username != null}" href="#" th:href="@{/}">Adventure #2</a>
+								<a th:each="adventure : ${campaign.adventures}" th:text="${adventure.title}" th:if="${session.username != null}" class="btn btn-default" href="#" th:href="@{/adventure(a=${adventure.adventureId},b=${adventure.playerAdventureId})}">Adventure #1</a>
 							</div>
 						</div>
 						<div class="row mid_row_spacer">
