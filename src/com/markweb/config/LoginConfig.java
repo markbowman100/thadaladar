@@ -16,8 +16,10 @@ public class LoginConfig {
 	
 	@Bean
 	public DataSource getDataSource() {
+		
 	    JndiDataSourceLookup lookup = new JndiDataSourceLookup();
 	    return lookup.getDataSource("jdbc/thadalod_primary");
+	    
 	}
 	
 	@Bean

@@ -13,7 +13,7 @@
 		
 		</div>
 			
-		<div class="row main_body">
+		<div class="row main_body" th:if="${adventure != null}">
 			<div class="col-sm-1 side-panel">
 				
 			</div>
@@ -41,19 +41,42 @@
 				<div class="row row_spacer">
 				
 				</div>
-				<div class="row">
+				<div class="row" th:if="${!adventure.scene.options.empty}" >
 					<div th:text="${session.adventure.scene.title}"></div>
 					<div th:text="${session.adventure.scene.story}"></div>
-					<form th:action="@{/adventure(a=${adventure.adventureId},b=${adventure.playerAdventureId})}" th:object="${command}" method="post">
+					<form th:action="@{/adventure(a1=${adventure.adventureId},b1=${adventure.playerAdventureId})}" th:object="${command}" method="post">
 						<ul>
 						  	<li th:each="opt : ${adventure.scene.options}">
 						    	<input type="radio" th:field="*{selectedOption}" th:value="${opt.title}" />
 						    	<label th:for="${#ids.prev('selectedOption')}" th:text="${opt.title}">Option</label>
 						 	 </li>
 						</ul>
-						<button th:if="${adventure.scene.options} != null" type="submit">Embark!</button>
+						<button type="submit">Embark!</button>
 					</form>
 				</div>
+				<div class="row" th:if="${adventure.scene.options.empty}" >
+					<div th:text="${session.adventure.scene.title}"></div>
+					<div th:text="${session.adventure.scene.story}"></div>
+					<form th:action="@{/complete(a1=${adventure.playerAdventureId})}" method="post">
+						<button type="submit">Complete</button>
+					</form>
+				</div>
+			</div>
+			<div class="col-sm-1 side-panel">
+			
+			</div>
+		</div>
+		<div class="row main_body" th:if="${adventure == null}">
+			<div class="col-sm-1 side-panel">
+				
+			</div>
+			<div class="col-sm-10">
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<h2 class = "text-center">No Valid Adventures Found</h2>
 			</div>
 			<div class="col-sm-1 side-panel">
 			

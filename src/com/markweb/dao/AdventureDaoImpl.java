@@ -9,10 +9,12 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.markweb.config.LoginConfig;
 import com.markweb.objects.Campaign;
 
+@Repository
 public class AdventureDaoImpl implements AdventureDao {
 
 	private LoginConfig config = new LoginConfig();
@@ -66,7 +68,9 @@ public class AdventureDaoImpl implements AdventureDao {
 					+ "WHERE "
 						+ "padv.CampaignId = ? "
 					+ "AND "
-						+ "padv.playerId = ?;";
+						+ "padv.playerId = ? "
+					+ "AND "
+						+ "padv.Complete = 0;";
 
 			resultSet = template.queryForList(sql, new Object[] { campaignId, playerId },
 					new int[] { Types.INTEGER, Types.INTEGER });
@@ -74,7 +78,7 @@ public class AdventureDaoImpl implements AdventureDao {
 		} catch (Exception e) {
 			log.info("AdventureDaoImpl getAdventures " + e);
 		}
-
+		
 		return resultSet;
 	}
 
@@ -161,7 +165,8 @@ public class AdventureDaoImpl implements AdventureDao {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getAdventure(int playerAdventureId) {
+	public List<Map<String, Object>> getAdventure(int playerAdventureId, String username) {
+		
 		List<Map<String, Object>> resultSet = new ArrayList<Map<String, Object>>();
 		//TODO: Might be a broken query... fix it
 		try {
@@ -186,15 +191,19 @@ public class AdventureDaoImpl implements AdventureDao {
 					+ "ON "
 						+ "play.UserId = user.UserId "
 					+ "WHERE "
-						+ "pa.RowId = ? ;";
+						+ "pa.RowId = ? "
+					+ "AND "
+						+ "pa.Complete = 0 "
+					+ "AND "
+						+ "user.Username = ?;";
 
-			resultSet = template.queryForList(sql, new Object[] { playerAdventureId },
-					new int[] { Types.INTEGER });
+			resultSet = template.queryForList(sql, new Object[] { playerAdventureId, username },
+					new int[] { Types.INTEGER, Types.VARCHAR });
 
 		} catch (Exception e) {
 			log.info("AdventureDaoImpl getAdventure " + e);
 		}
-
+		
 		return resultSet;
 	}
 
@@ -273,5 +282,27 @@ public class AdventureDaoImpl implements AdventureDao {
 		}
 		return rows;
 	}
+
+	@Override
+	public int completeAdventure(int playerAdventureId) {
+		int rows = 0;
+		try {
+			String sql = "UPDATE "
+						+ "Player_Adventure padv "
+					+ "SET "
+						+ "padv.Complete = 1 "
+					+ "WHERE  "
+						+ "padv.RowId = ?;";
+
+			rows = template.update(sql, new Object[] { playerAdventureId },
+					new int[] { Types.INTEGER });
+
+		} catch (Exception e) {
+			log.info("AdventureDaoImpl updateSceneUnselectedOptions " + e);
+		}
+		return rows;
+	}
+	
+	
 
 }

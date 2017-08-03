@@ -34,25 +34,28 @@ public class AdventureLogicImpl implements AdventureLogic {
 	}
 	
 	@Override
-	public Adventure getAdventures(int playerAdventureId, int adventureId) {
-		List<Map<String, Object>> rawAdventures = dao.getAdventure(playerAdventureId);
+	public Adventure getAdventures(int playerAdventureId, int adventureId, String username) {
+		List<Map<String, Object>> rawAdventures = dao.getAdventure(playerAdventureId, username);
 		List<Adventure> currentAdventures = mapAdventures(rawAdventures);
-		Adventure adventure = currentAdventures.get(0);
-		List<AdventureScene> scenes = getScene(playerAdventureId);
-		
-		for (AdventureScene scene: scenes) {
-			List<SceneOption> options = getSceneOption(scene.getSceneId());
-			scene.setOptions(options);
+		Adventure adventure = new Adventure();
+		if (!currentAdventures.isEmpty()) {
+			adventure = currentAdventures.get(0);
+			List<AdventureScene> scenes = getScene(playerAdventureId);
+			
+			for (AdventureScene scene: scenes) {
+				List<SceneOption> options = getSceneOption(scene.getSceneId());
+				scene.setOptions(options);
+			}
+			
+			// There should only ever be one scene per adventure here. If not, something unexpected happened.
+			adventure.setScenes(scenes.get(0));
 		}
-		
-		// There should only ever be one scene per adventure here. If not, something unexpected happened.
-		adventure.setScenes(scenes.get(0));
 		return adventure;
 	}
 	
 	@Override
-	public Adventure getNextAdventure(int playerAdventureId, int playerSceneId) {
-		List<Map<String, Object>> rawAdventures = dao.getAdventure(playerAdventureId);
+	public Adventure getNextAdventure(int playerAdventureId, int playerSceneId, String username) {
+		List<Map<String, Object>> rawAdventures = dao.getAdventure(playerAdventureId, username);
 		List<Adventure> currentAdventures = mapAdventures(rawAdventures);
 		Adventure adventure = currentAdventures.get(0);
 		List<AdventureScene> scenes = getNextScene(playerSceneId, adventure.getPlayerId());
@@ -77,6 +80,25 @@ public class AdventureLogicImpl implements AdventureLogic {
 	public int updateSceneUnselectedOptions(int playerId, int nextSceneId, int playerAdventureId) {
 		//TODO: Also update unselected options
 		return dao.updateSceneUnselectedOptions(playerId, nextSceneId, playerAdventureId);
+	}
+	
+	@Override
+	public int completeAdventures(int playerAdventureId) {
+		// TODO Auto-generated method stub
+		return dao.completeAdventure(playerAdventureId);
+	}
+	
+	@Override
+	public List<String> getPlayers(int campaignId) {
+		// TODO Auto-generated method stub
+		List<Map<String, Object>> rawPlayers = dao.getPlayers(campaignId);
+		List<String> players = new ArrayList<String>();
+		
+		for (Map<String, Object> player : rawPlayers) {
+			players.add((String) player.get("Username"));
+		}
+		
+		return players;
 	}
 	
 	private List<Campaign> getCampaign(String username) {

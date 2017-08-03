@@ -2,8 +2,10 @@ package com.markweb.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -43,13 +45,19 @@ public class AdventureController {
 		}
 		
 		List<Campaign> campaigns = logic.getCampaigns((String) session.getAttribute("username")); 
+		
+		for (Campaign campaign : campaigns) {
+			List<String> players = logic.getPlayers(campaign.getId());
+			campaign.setOtherPlayers(players);
+		}
+		
 		model.addAttribute("campaigns", campaigns);
 		
 		return pageName;
     }
 	
-	@RequestMapping(value = "/adventure{a}{b}", method = RequestMethod.GET)
-    public @ResponseBody ModelAndView getScenes(@RequestParam("a") int adventureId, @RequestParam("b") int playerAdventureId, @ModelAttribute AdventureFormBean command, BindingResult bindingresult, Model model, HttpSession session) {
+	@RequestMapping(value = "/adventure{a1}{b1}", method = RequestMethod.GET)
+    public @ResponseBody ModelAndView getScenes(@RequestParam("a1") int adventureId, @RequestParam("b1") int playerAdventureId, @ModelAttribute AdventureFormBean command, BindingResult bindingresult, Model model, HttpSession session) {
 		
 		String pageName = "adventure";
 		
@@ -59,24 +67,44 @@ public class AdventureController {
 		
 		Adventure sessionAdventure = (Adventure) session.getAttribute("adventure");
 		
-		sessionAdventure = logic.getAdventures(playerAdventureId, adventureId); 
-		session.setAttribute("adventure", sessionAdventure); 
-		model.addAttribute("adventure", sessionAdventure);
-
-		List<String> options = new ArrayList<String>();
-		for (SceneOption option : sessionAdventure.getScene().getOptions()) {
-			options.add(option.getTitle());
+		sessionAdventure = logic.getAdventures(playerAdventureId, adventureId, (String) session.getAttribute("username")); 
+		Adventure testAdventure = new Adventure();
+		// Checking to make sure the returned adventure isn't empty
+		if (sessionAdventure.getAdventureId() != testAdventure.getAdventureId() && 
+				sessionAdventure.getPlayerAdventureId() != testAdventure.getPlayerAdventureId() &&
+				sessionAdventure.getScene() != testAdventure.getScene() ) {
+			session.setAttribute("adventure", sessionAdventure); 
+			model.addAttribute("adventure", sessionAdventure);
+	
+			List<String> options = new ArrayList<String>();
+			for (SceneOption option : sessionAdventure.getScene().getOptions()) {
+				options.add(option.getTitle());
+			}
+			command.setOptions(options);
 		}
-		command.setOptions(options);
 		
 		return new ModelAndView(pageName, "command", command);
     }
 	
-	@RequestMapping(value = "/adventure{a}{b}", method = RequestMethod.POST)
-    public @ResponseBody ModelAndView postScenes(@RequestParam("a") int adventureId, @RequestParam("b") int playerAdventureId, @ModelAttribute AdventureFormBean command, BindingResult bindingresult, Model model, HttpSession session) {
+	@RequestMapping(value = "/complete{a1}", method = RequestMethod.POST)
+    public @ResponseBody ModelAndView completeAdventure(@RequestParam("a1") int playerAdventureId, @Valid @ModelAttribute AdventureFormBean command, BindingResult bindingresult, Model model, HttpSession session) {
+		
+		String pageName = "redirect:/campaign";
+		
+		if (session.getAttribute("username") == null) {
+			pageName = "redirect:/";
+		}
+		
+		logic.completeAdventures(playerAdventureId);
+		
+		return new ModelAndView(pageName);
+    }
+	
+	@RequestMapping(value = "/adventure{a1}{b1}", method = RequestMethod.POST)
+    public @ResponseBody ModelAndView postScenes(@RequestParam("a1") int adventureId, @RequestParam("b1") int playerAdventureId, @Valid @ModelAttribute AdventureFormBean command, BindingResult bindingresult, Model model, HttpSession session) {
 		
 		String pageName = "adventure";
-		
+		System.out.println("why is it going here... 1");
 		if (session.getAttribute("username") == null) {
 			pageName = "redirect:/";
 		}
@@ -84,30 +112,27 @@ public class AdventureController {
 		Adventure sessionAdventure = (Adventure) session.getAttribute("adventure");
 		int nextSceneId = 0;
 		
-		if (command.getSelectedOption() != null) {
-			logic.updateSceneSelectedOption(sessionAdventure.getScene(), command.getSelectedOption());
-		}
-		else {
-			if (sessionAdventure.getScene().getOptions().isEmpty()) {
-				//TODO: Complete the scene
+		if (!bindingresult.hasErrors()) {
+			if (command.getSelectedOption() != null) {
+				logic.updateSceneSelectedOption(sessionAdventure.getScene(), command.getSelectedOption());
 			}
-		}
-		
-		for (SceneOption option : sessionAdventure.getScene().getOptions()) {
-			if (command.getSelectedOption().equals(option.getTitle())) {
-				nextSceneId = option.getNextSceneId();
+			
+			for (SceneOption option : sessionAdventure.getScene().getOptions()) {
+				if (command.getSelectedOption().equals(option.getTitle())) {
+					nextSceneId = option.getNextSceneId();
+				}
 			}
-		}
-		
-		if (command.getSelectedOption() != null) {
-			logic.updateSceneUnselectedOptions(sessionAdventure.getPlayerId(), nextSceneId, playerAdventureId);
+			
+			if (command.getSelectedOption() != null) {
+				logic.updateSceneUnselectedOptions(sessionAdventure.getPlayerId(), nextSceneId, playerAdventureId);
+			}
 		}
 		
 		if (nextSceneId != 0) {
-			sessionAdventure = logic.getNextAdventure(playerAdventureId, nextSceneId); 
+			sessionAdventure = logic.getNextAdventure(playerAdventureId, nextSceneId, (String) session.getAttribute("username")); 
 		}
 		else {
-			sessionAdventure = logic.getAdventures(playerAdventureId, adventureId); 
+			sessionAdventure = logic.getAdventures(playerAdventureId, adventureId, (String) session.getAttribute("username")); 
 		}
 		
 		session.setAttribute("adventure", sessionAdventure);
