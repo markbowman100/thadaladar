@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Thadalodar</title>
+	    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.css" th:href="@{/resources/css/bootstrap.css}">
+	    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-theme.css" th:href="@{/resources/css/bootstrap-theme.css}">
+	    <link rel="stylesheet" type="text/css" href="/resources/css/markweb.css" th:href="@{/resources/css/markweb.css}">
+		<script src="/resources/js/jQuery.js" th:src="@{/resources/js/jQuery.js}"></script> 
+		<script src="/resources/js/bootstrap.js" th:src="@{/resources/js/bootstrap.js}"></script>
+	</head>
+	<body>
+		<div class="header" th:include="header :: header">
+		
+		</div>
+		<div class="row main_body">
+			<div class="col-sm-3 side-panel">
+			
+			</div>
+			<div class="col-sm-6">
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<div class="row">
+					<div class="col-sm-4">
+						<h2>Start Campaign</h2>
+					</div>
+					<div class="col-sm-4">
+						
+					</div>
+					<div class="col-sm-4">
+						<br>
+						<a class="btn btn-default" th:if="${session.username != null}" href="#" th:href="@{/joincampaign}">Join Campaign</a>
+					</div>
+				</div>
+				<div class="row row_spacer">
+				
+				</div>
+				<div class="row campaign">
+					<div class="row mid_row_spacer">
+				
+					</div>
+					<div class="col-sm-12">
+						<form action="#" th:action="@{/createcampaign}" th:object="${command}" method="post">
+							<div class="row">
+								<h3 class="text-center">Title</h3>
+								<input class="form-control" th:field="*{title}" type="text" placeholder="Title"></input>
+								<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+								<br>
+							</div>
+							<div class="row">
+								<h3 class="text-center">Description</h3>
+								<input class="form-control" th:field="*{description}" type="text" placeholder="Description"></input>
+								<div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+								<br>
+							</div>
+							<div class="row">
+								<h3 class="text-center">Game</h3>
+								<input class="form-control" th:field="*{game}" type="text" placeholder="Game"></input>
+								<div th:if="${#fields.hasErrors('game')}" th:errors="*{game}"></div>
+								<br>
+							</div>
+							<div class="row">
+								<h3 class="text-center">Version</h3>
+								<input class="form-control" th:field="*{version}" type="text" placeholder="Version"></input>
+								<div th:if="${#fields.hasErrors('version')}" th:errors="*{version}"></div>
+								<br>
+							</div>
+							<div class="row">
+								<h3 class="text-center">Accepting Players</h3>
+								<input type="checkbox" th:field="*{acceptingPlayers}" />
+						    	<label th:for="${#ids.prev('acceptingPlayers')}">Yes or No</label>
+								<br>
+								<br>
+							</div>
+							<div class="row">
+								<h3 class="text-center">Public Game</h3>
+						    	<input type="checkbox" th:field="*{publicGame}" />
+						    	<label th:for="${#ids.prev('publicGame')}">Yes or No</label>
+								<br>
+							</div>
+							<input class="btn submit_button btn-navy" type="submit" value="Submit"><input class="btn reset_button btn-navy" type="reset" value="Reset">
+						</form>
+					</div>
+				</div>
+				<div class="row row_spacer">
+				
+				</div>
+			</div>
+			<div class="col-sm-3 side-panel">
+			
+			</div>
+		</div>
+		
+		<div class="footer" th:include="footer:: footer">
+		
+		</div>
+	</body>
+</html>
