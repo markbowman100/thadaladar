@@ -10,9 +10,11 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.markweb.config.LoginConfig;
 
+@Repository
 public class LoginDaoImpl implements LoginDao {
 	
 	private LoginConfig config = new LoginConfig();

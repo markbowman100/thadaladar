@@ -23,66 +23,6 @@ public class AdventureDaoImpl implements AdventureDao {
 	private static Logger log = Logger.getLogger("com.markweb.controller");
 
 	@Override
-	public List<Map<String, Object>> getCampaigns(String username) {
-		List<Map<String, Object>> resultSet = new ArrayList<Map<String, Object>>();
-
-		try {
-			String sql = "SELECT "
-						+ "play.PlayerId, cam.CampaignId, Title, Description, Game, Version, AcceptingPlayers "
-					+ "FROM "
-						+ "Campaign cam "
-					+ "LEFT JOIN "
-						+ "Player play "
-					+ "ON "
-						+ "cam.CampaignId = play.CampaignId "
-					+ "LEFT JOIN "
-						+ "User user "
-					+ "ON "
-						+ "user.UserId = play.UserId "
-					+ "WHERE "
-						+ "user.Username = ?;";
-
-			resultSet = template.queryForList(sql, new Object[] { username },
-					new int[] { Types.VARCHAR });
-
-		} catch (Exception e) {
-			log.info("AdventureDaoImpl getCampaigns " + e);
-		}
-		
-		return resultSet;
-	}
-
-	@Override
-	public List<Map<String, Object>> getAdventures(int campaignId, int playerId) {
-		List<Map<String, Object>> resultSet = new ArrayList<Map<String, Object>>();
-		//TODO: Might be a broken query... fix it
-		try {
-			String sql = "SELECT DISTINCT "
-						+ "padv.RowId, padv.PlayerId, adv.AdventureId, adv.Title, adv.Description "
-					+ "FROM "
-						+ "Adventure adv "
-					+ "LEFT JOIN "
-						+ "Player_Adventure padv "
-					+ "ON "
-						+ "padv.AdventureId = adv.AdventureId "
-					+ "WHERE "
-						+ "padv.CampaignId = ? "
-					+ "AND "
-						+ "padv.playerId = ? "
-					+ "AND "
-						+ "padv.Complete = 0;";
-
-			resultSet = template.queryForList(sql, new Object[] { campaignId, playerId },
-					new int[] { Types.INTEGER, Types.INTEGER });
-
-		} catch (Exception e) {
-			log.info("AdventureDaoImpl getAdventures " + e);
-		}
-		
-		return resultSet;
-	}
-
-	@Override
 	public List<Map<String, Object>> getScenes(int playerAdventureId) {
 		List<Map<String, Object>> resultSet = new ArrayList<Map<String, Object>>();
 		//TODO: Need to add username in where clause
@@ -204,32 +144,6 @@ public class AdventureDaoImpl implements AdventureDao {
 			log.info("AdventureDaoImpl getAdventure " + e);
 		}
 		
-		return resultSet;
-	}
-
-	@Override
-	public List<Map<String, Object>> getPlayers(int campaignId) {
-		List<Map<String, Object>> resultSet = new ArrayList<Map<String, Object>>();
-		//TODO: Need to add username in where clause
-		try {
-			String sql = "SELECT "
-							+ "Username, RoleId "
-						+ "FROM "
-							+ "Player play "
-						+ "LEFT JOIN "
-							+ "User user "
-						+ "ON "
-							+ "play.UserId = user.UserId "							
-						+ "WHERE "
-							+ "CampaignId = ?;";
-
-			resultSet = template.queryForList(sql, new Object[] { campaignId },
-					new int[] { Types.INTEGER });
-
-		} catch (Exception e) {
-			log.info("AdventureDaoImpl getPlayers " + e);
-		}
-
 		return resultSet;
 	}
 

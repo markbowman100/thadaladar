@@ -35,27 +35,6 @@ public class AdventureController {
 	
 	//Campaign Wireframe URL: https://wireframe.cc/DcS067
 	
-	@RequestMapping(value = "/campaign", method = RequestMethod.GET)
-    public String getAdventures(Model model, HttpSession session) {
-		
-		String pageName = "campaign";
-		
-		if (session.getAttribute("username") == null) {
-			pageName = "redirect:/";
-		}
-		
-		List<Campaign> campaigns = logic.getCampaigns((String) session.getAttribute("username")); 
-		
-		for (Campaign campaign : campaigns) {
-			List<String> players = logic.getPlayers(campaign.getId());
-			campaign.setOtherPlayers(players);
-		}
-		
-		model.addAttribute("campaigns", campaigns);
-		
-		return pageName;
-    }
-	
 	@RequestMapping(value = "/adventure{a1}{b1}", method = RequestMethod.GET)
     public @ResponseBody ModelAndView getScenes(@RequestParam("a1") int adventureId, @RequestParam("b1") int playerAdventureId, @ModelAttribute AdventureFormBean command, BindingResult bindingresult, Model model, HttpSession session) {
 		

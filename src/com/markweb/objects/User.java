@@ -6,9 +6,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class User {
 	
-	@NotBlank
+	@NotBlank(message = "Must Not Be Blank")
 	String username;
-	@NotBlank
+	@NotBlank(message = "Must Not Be Blank")
 	String password;
 	List<String> random;
 	

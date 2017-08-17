@@ -12,7 +12,6 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Register {
 	
 	@NotBlank(message = "Must Not Be Blank")
-	@Size(min=2, max=30, message = "Must be between 2 and 30 characters")
 	String username;
 	@NotBlank(message = "Must Not Be Blank")
 	@Pattern(regexp = "^(?=.*\\d).{8,30}$", message = "Password must be between 8 and 30 characters and contain 1 number")

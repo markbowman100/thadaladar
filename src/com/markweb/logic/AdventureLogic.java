@@ -9,8 +9,6 @@ import com.markweb.objects.Campaign;
 
 public interface AdventureLogic {
 	
-	public List<Campaign> getCampaigns(String username);
-	
 	public Adventure getAdventures(int playerAdventureId, int adventureId, String username);
 	
 	public Adventure getNextAdventure(int playerAdventureId, int playerSceneId, String username);
@@ -20,7 +18,5 @@ public interface AdventureLogic {
 	public int updateSceneUnselectedOptions(int playerId, int sceneId, int playerAdventureId);
 	
 	public int completeAdventures(int playerAdventureId);
-	
-	public List<String> getPlayers(int campaignId);
 	
 }
