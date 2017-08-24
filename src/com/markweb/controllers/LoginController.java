@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -24,7 +23,6 @@ import com.markweb.objects.User;
 public class LoginController {
 	
 	private LoginLogic logic = new LoginLogicImpl();
-	private static Logger log = Logger.getLogger("com.markweb.controller");
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
     public String helloGet(User user, BindingResult bindingresult, HttpSession session) {

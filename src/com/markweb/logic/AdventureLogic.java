@@ -1,11 +1,7 @@
 package com.markweb.logic;
 
-import java.util.List;
-import java.util.Map;
-
 import com.markweb.objects.Adventure;
 import com.markweb.objects.AdventureScene;
-import com.markweb.objects.Campaign;
 
 public interface AdventureLogic {
 	

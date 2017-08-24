@@ -24,7 +24,7 @@
 				<br>
 				<div class="row">
 					<div class="col-sm-4">
-						<h2>Current Campaigns</h2>
+						<h2>Open Campaigns</h2>
 					</div>
 					<div class="col-sm-4">
 						
@@ -32,14 +32,13 @@
 					<div class="col-sm-4">
 						<br>
 						<a class="btn btn-default" style="margin-right:5px;" th:if="${session.username != null}" href="#" th:href="@{/createcampaign}">Start Campaign</a>
-						<a class="btn btn-default" th:if="${session.username != null}" href="#" th:href="@{/viewallcampaigns}">Join Campaign</a>
 					</div>
 				</div>
 				<div class="row row_spacer">
 				
 				</div>
 				<div th:if="${campaigns.isEmpty()}" class="row campaign">
-					<div style="padding-top:100px;padding-bottom:100px;fon-size:60px;" class = "text-center">You have not joined any campaigns yet.</div>
+					<div style="padding-top:100px;padding-bottom:100px;fon-size:60px;" class = "text-center">There are no open campaigns at this time.</div>
 				</div>
 				<div th:each="campaign : ${campaigns}" class="row campaign">
 					<div class="row mid_row_spacer">
@@ -74,32 +73,21 @@
 						<div class="row">
 							<div class="col-sm-12" th:text="${campaign.description}">Description</div>
 						</div>
-						<div th:if="${!campaign.adventures.empty}">
-							<div class="row mid_row_spacer campaign_header">
+						<div class="row mid_row_spacer">
 							
-							</div>
-							<div class="row">
-								<div class="col-sm-12">
-									<h5 style = "color:black;">Stuff to Do:</h5>
-								</div>
-							</div>
-							<div class="row row_spacer">
-							
-							</div>
-							<div class="row">
-								<div class="col-sm-12">
-									<a th:each="adventure : ${campaign.adventures}" th:text="${adventure.title}" th:if="${session.username != null}" class="btn btn-default" href="#" th:href="@{/adventure(a1=${adventure.adventureId},b1=${adventure.playerAdventureId})}">Adventure #1</a>
-								</div>
-							</div>
 						</div>
 						<div class="row mid_row_spacer">
-						
+							<form action="#" th:action="@{/viewallcampaigns(a1=${campaign.id})}" method="post">
+								<input class="btn submit_button btn-navy float-right" type="submit" value="Join">
+							</form>
 						</div>
+						<br>
 					</div>
 					<div class="row row_spacer">
 				
 					</div>
 				</div>
+				<br>
 				<div class="row row_spacer">
 				
 				</div>

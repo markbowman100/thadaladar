@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.markweb.config.LoginConfig;
-import com.markweb.objects.Campaign;
 
 @Repository
 public class AdventureDaoImpl implements AdventureDao {
@@ -20,7 +19,7 @@ public class AdventureDaoImpl implements AdventureDao {
 	private LoginConfig config = new LoginConfig();
 	private DataSource source = config.getDataSource();
 	private JdbcTemplate template = config.getJdbcTemplate(source);
-	private static Logger log = Logger.getLogger("com.markweb.controller");
+	private static Logger log = Logger.getLogger("com.markweb.dao.AdventureDaoImpl");
 
 	@Override
 	public List<Map<String, Object>> getScenes(int playerAdventureId) {

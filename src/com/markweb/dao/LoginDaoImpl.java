@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +19,7 @@ public class LoginDaoImpl implements LoginDao {
 	private LoginConfig config = new LoginConfig();
 	private DataSource source = config.getDataSource();
 	private JdbcTemplate template = config.getJdbcTemplate(source);
-	private static Logger log = Logger.getLogger("com.markweb.controller");
+	private static Logger log = Logger.getLogger("com.markweb.dao.LoginDaoImpl");
 	
 	@Override
 	public List<Map<String, Object>> attemptLoginCredentials(String username, String password) {

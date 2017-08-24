@@ -1,7 +1,6 @@
 package com.markweb.objects;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Adventure {
 	

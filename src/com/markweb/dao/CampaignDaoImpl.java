@@ -23,7 +23,7 @@ public class CampaignDaoImpl implements CampaignDao {
 	private static Logger log = Logger.getLogger("com.markweb.controller");
 
 	@Override
-	public List<Map<String, Object>> getCampaigns(String username) {
+	public List<Map<String, Object>> getMyCampaigns(String username) {
 		List<Map<String, Object>> resultSet = new ArrayList<Map<String, Object>>();
 
 		try {
@@ -41,6 +41,47 @@ public class CampaignDaoImpl implements CampaignDao {
 						+ "user.UserId = play.UserId "
 					+ "WHERE "
 						+ "user.Username = ?;";
+
+			resultSet = template.queryForList(sql, new Object[] { username },
+					new int[] { Types.VARCHAR });
+
+		} catch (Exception e) {
+			log.info("AdventureDaoImpl getCampaigns " + e);
+		}
+		
+		return resultSet;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getAllOtherCampaigns(String username) {
+		List<Map<String, Object>> resultSet = new ArrayList<Map<String, Object>>();
+
+		try {
+			String sql = 
+					"SELECT DISTINCT "
+						+ "CampaignId, Title, Description, Game, Version "
+					+ "FROM "
+						+ "Campaign "
+					+ "WHERE "
+						+ "AcceptingPlayers = 1 "
+					+ "AND "
+						+ "CampaignId NOT IN "
+					+ "( "
+						+ "SELECT "
+							+ "cam.CampaignId "
+						+ "FROM "
+							+ "Campaign cam "
+						+ "LEFT JOIN "
+							+ "Player play "
+						+ "ON "
+							+ "cam.CampaignId = play.CampaignId "
+						+ "LEFT JOIN "
+							+ "User user "
+						+ "ON "
+							+ "user.UserId = play.UserId "
+						+ "WHERE "
+							+ "user.Username = ?"
+					+ ");";
 
 			resultSet = template.queryForList(sql, new Object[] { username },
 					new int[] { Types.VARCHAR });
@@ -127,6 +168,24 @@ public class CampaignDaoImpl implements CampaignDao {
 					campaign.getGame(), campaign.getVersion(), campaign.getAcceptingPlayers(), username},
 					new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, 
 							Types.INTEGER, Types.VARCHAR});
+
+		} catch (Exception e) {
+			log.info("CampaignDaoImpl createCampaign " + e);
+		}
+		return rows;
+	}
+
+	@Override
+	public int joinCampaign(int campaignId, String username) {
+		int rows = 0;
+		try {
+			String sql = "INSERT INTO "
+						+ "Player(UserId, CampaignId, RoleId) "
+					+ "VALUES "
+						+ "((SELECT UserId FROM User WHERE Username = ?), ?, 2) ";
+
+			rows = template.update(sql, new Object[] { username, campaignId },
+					new int[] { Types.VARCHAR, Types.INTEGER });
 
 		} catch (Exception e) {
 			log.info("CampaignDaoImpl createCampaign " + e);

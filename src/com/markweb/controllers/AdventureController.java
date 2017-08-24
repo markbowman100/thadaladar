@@ -2,12 +2,10 @@ package com.markweb.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +21,6 @@ import com.markweb.logic.AdventureLogic;
 import com.markweb.logic.AdventureLogicImpl;
 import com.markweb.objects.Adventure;
 import com.markweb.objects.AdventureFormBean;
-import com.markweb.objects.Campaign;
 import com.markweb.objects.SceneOption;
 
 @EnableWebMvc
@@ -31,7 +28,6 @@ import com.markweb.objects.SceneOption;
 public class AdventureController {
 	
 	private AdventureLogic logic = new AdventureLogicImpl();
-	private static Logger log = Logger.getLogger("com.markweb.controller");
 	
 	//Campaign Wireframe URL: https://wireframe.cc/DcS067
 	

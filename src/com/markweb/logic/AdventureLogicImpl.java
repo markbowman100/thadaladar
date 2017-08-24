@@ -10,7 +10,6 @@ import com.markweb.dao.AdventureDao;
 import com.markweb.dao.AdventureDaoImpl;
 import com.markweb.objects.Adventure;
 import com.markweb.objects.AdventureScene;
-import com.markweb.objects.Campaign;
 import com.markweb.objects.SceneOption;
 
 public class AdventureLogicImpl implements AdventureLogic {

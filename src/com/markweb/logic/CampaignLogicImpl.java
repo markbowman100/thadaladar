@@ -17,8 +17,10 @@ public class CampaignLogicImpl implements CampaignLogic {
 	CampaignDao dao = new CampaignDaoImpl();
 	
 	@Override
-	public List<Campaign> getCampaigns(String username) {
-		List<Campaign> campaigns = getCampaign(username);
+	public List<Campaign> getMyCampaigns(String username) {
+		
+		List<Map<String, Object>> rawCampaigns = dao.getMyCampaigns(username);
+		List<Campaign> campaigns = getCampaign(rawCampaigns);
 		
 		// Each campaign has a list of adventures. Each adventure has a list of scenes. Each scene has a list
 		// of options. The first loop is to set adventures. The second loop is to set the scenes. The third
@@ -29,6 +31,14 @@ public class CampaignLogicImpl implements CampaignLogic {
 			campaign.setAdventures(adventures);
 		}
 		
+		return campaigns;
+	}
+	
+	@Override
+	public List<Campaign> getAllOtherCampaigns(String username) {
+		// Getting all campaigns that are accepting players and aren't assigned to current user.
+		List<Map<String, Object>> rawCampaigns = dao.getAllOtherCampaigns(username);
+		List<Campaign> campaigns = getCampaign(rawCampaigns);
 		return campaigns;
 	}
 	
@@ -45,11 +55,9 @@ public class CampaignLogicImpl implements CampaignLogic {
 		return players;
 	}
 	
-private List<Campaign> getCampaign(String username) {
+	private List<Campaign> getCampaign(List<Map<String, Object>> rawCampaigns) {
 		
 		List<Campaign> currentCampaigns = new ArrayList<Campaign>(); 
-		
-		List<Map<String, Object>> rawCampaigns = dao.getCampaigns(username);
 		
 		for(Map<String, Object> raw : rawCampaigns) {
 			Campaign campaign = new Campaign();
@@ -160,6 +168,12 @@ private List<Campaign> getCampaign(String username) {
 	@Override
 	public int createCampaign(CreateCampaignFormBean campaign, String username) {
 		return dao.createCampaign(campaign, username);
+	}
+
+	@Override
+	public int joinCampaign(int campaignId, String username) {
+		int success = dao.joinCampaign(campaignId, username);
+		return success;
 	}
 
 }

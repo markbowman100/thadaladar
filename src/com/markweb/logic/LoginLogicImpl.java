@@ -3,9 +3,6 @@ package com.markweb.logic;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.markweb.config.LoginConfig;
@@ -18,7 +15,6 @@ public class LoginLogicImpl implements LoginLogic {
 	private BCryptPasswordEncoder passwordEncoder = config.getBCryptPasswordEncoder();
 	
 	private LoginDao dao = new LoginDaoImpl();
-	private static Logger log = Logger.getLogger("com.markweb.controller");
 
 	@Override
 	public boolean attemptLoginCredentials(String username, String password) {

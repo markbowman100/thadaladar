@@ -1,8 +1,5 @@
 package com.markweb.objects;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 public class CreateCampaignFormBean {
